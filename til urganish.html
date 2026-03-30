@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasturlashni o‘rganish</title>
+
+<style>
+:root { --bg:#f4f7f6; --card:#fff; --text:#333; --primary:#007bff; }
+.dark-mode { --bg:#1a1a1a; --card:#2d2d2d; --text:#fff; --primary:#3498db; }
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;transition:0.2s;}
+body{background:var(--bg);color:var(--text);}
+
+/* NAVBAR */
+.navbar{
+display:flex;justify-content:space-between;align-items:center;
+background:var(--primary);padding:10px;position:fixed;width:100%;top:0;
+}
+.nav-left{display:flex;gap:10px;flex-wrap:wrap;}
+.nav-left a{
+background:#1900ff;color:#fff;padding:6px 12px;border-radius:6px;
+text-decoration:none;font-weight:bold;
+}
+.nav-left a:hover{background:yellow;color:black;}
+
+/* MAIN */
+.main{padding:100px 15px;}
+
+/* CONTENT */
+.content{
+background:var(--card);
+padding:30px;
+border-radius:12px;
+max-width:900px;
+margin:auto;
+text-align:center;
+box-shadow:10px 10px 10px rgb(0,217,255);
+}
+.content:hover{
+transform:translateY(-5px);
+box-shadow:10px 10px 10px red;
+}
+
+h1{margin-bottom:10px;}
+h3{margin-bottom:20px;color:gray;}
+
+code{
+display:block;
+background:#eee;
+padding:10px;
+margin:10px 0;
+text-align:left;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+  <div class="nav-left">
+    <a onclick="showContent('html')" data-key="nav-html">HTML</a>
+    <a onclick="showContent('css')" data-key="nav-css">CSS</a>
+    <a onclick="showContent('js')" data-key="nav-js">JavaScript</a>
+    <a onclick="showSettings()" data-key="nav-sett">Sozlamalar</a>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content" id="content">
+
+```
+<h1 data-key="main-title">
+  Til o‘rganish uchun tepadagi HTML CSS JS tillaridan birini tanlang
+</h1>
+
+<h3 data-key="main-sub">
+  Maslahatim: 1-HTML, 2-CSS, 3-JavaScript ketma-ket o‘rganing
+</h3>
+```
+
+  </div>
+</div>
+
+<!-- SETTINGS -->
+
+<div id="settings" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+background:white;padding:20px;border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.3);">
+
+<h3 data-key="s-title">Sozlamalar</h3>
+<button onclick="document.body.classList.toggle('dark-mode')">🌙 Dark / Light</button>
+
+<p data-key="s-lang">Tilni tanlang</p>
+<button onclick="setLang('uz')">UZ</button>
+<button onclick="setLang('ru')">RU</button>
+<button onclick="setLang('en')">EN</button>
+
+<button onclick="hideSettings()">Close</button>
+
+</div>
+
+<script>
+let currentLang="uz";
+
+const lang={
+uz:{
+"nav-html":"HTML",
+"nav-css":"CSS",
+"nav-js":"JavaScript",
+"nav-sett":"Sozlamalar",
+"s-title":"Sozlamalar",
+"s-lang":"Tilni tanlang",
+
+"main-title":"Til o‘rganish uchun tepadagi HTML CSS JS tillaridan birini tanlang",
+"main-sub":"Maslahatim: 1-HTML, 2-CSS, 3-JavaScript ketma-ket o‘rganing",
+
+"html":`
+<h2>HTML</h2>
+<p>HTML — saytning skeleti.</p>
+<code>&lt;h1&gt;Salom&lt;/h1&gt;</code>
+<p>HTML bilan sayt boshlanadi.</p>
+`,
+
+"css":`
+<h2>CSS</h2>
+<p>CSS — saytni bezaydi.</p>
+<code>body { background:red; }</code>
+<p>Dizayn CSS bilan.</p>
+`,
+
+"js":`
+<h2>JavaScript</h2>
+<p>JavaScript — saytni jonlantiradi.</p>
+<code>alert("Salom")</code>
+<p>Interaktivlik JS bilan.</p>
+`
+},
+
+ru:{
+"nav-html":"HTML",
+"nav-css":"CSS",
+"nav-js":"JavaScript",
+"nav-sett":"Настройки",
+"s-title":"Настройки",
+"s-lang":"Выберите язык",
+
+"main-title":"Выберите HTML CSS JS сверху для обучения",
+"main-sub":"Совет: сначала HTML, потом CSS, потом JS",
+
+"html":"<h2>HTML</h2><p>Структура сайта</p>",
+"css":"<h2>CSS</h2><p>Дизайн сайта</p>",
+"js":"<h2>JavaScript</h2><p>Интерактивность</p>"
+},
+
+en:{
+"nav-html":"HTML",
+"nav-css":"CSS",
+"nav-js":"JavaScript",
+"nav-sett":"Settings",
+"s-title":"Settings",
+"s-lang":"Select language",
+
+"main-title":"Choose HTML CSS JS above to start learning",
+"main-sub":"Advice: Learn HTML → CSS → JS",
+
+"html":"<h2>HTML</h2><p>Website structure</p>",
+"css":"<h2>CSS</h2><p>Website design</p>",
+"js":"<h2>JavaScript</h2><p>Interactivity</p>"
+}
+};
+
+function setLang(l){
+currentLang=l;
+document.querySelectorAll("[data-key]").forEach(el=>{
+let key=el.getAttribute("data-key");
+el.innerText=lang[l][key];
+});
+showContent("home");
+}
+
+function showContent(type){
+let c=document.getElementById("content");
+
+if(type==="home"){
+c.innerHTML=`
+<h1>${lang[currentLang]["main-title"]}</h1>
+<h3>${lang[currentLang]["main-sub"]}</h3>
+`;
+return;
+}
+
+c.innerHTML=lang[currentLang][type];
+}
+
+function showSettings(){document.getElementById("settings").style.display="block";}
+function hideSettings(){document.getElementById("settings").style.display="none";}
+</script>
+
+</body>
+</html>
