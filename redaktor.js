@@ -6,8 +6,7 @@ const fileList = document.getElementById("fileList");
 const saveBtn = document.getElementById("saveBtn");
 const addFileBtn = document.getElementById("addFileBtn");
 
-let files = {"Welcome.txt":"Welcome!"};
-let currentFile = "Welcome.txt";
+let files = {"Buni o'chiring va yangi fayl qo'ying!":"Welcome!"};
 let htmlCode = "";
 let cssCode = "";
 let jsCode = "";
@@ -102,7 +101,6 @@ editor.addEventListener("keydown", function(e) {
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
-  <!-- Kodlaringizni shu yerga yozing -->
 </head>
 <body>
 
